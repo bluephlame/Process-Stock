@@ -34,6 +34,21 @@ class ProcessVend {
         return $magentoArray;
     }
 
+    public function seedStock()
+    {
+        $products = $vend->getProducts();
+        $magentoArray = [];
+        foreach($products as $product)
+        {
+            $sku = $product->__get('sku');
+            $inventory = $product->getInventory();
+            $price = $product->__get('price');
+            $magentoProduct = new MagentoProduct($sku,$inventory,$price);
+            $magentoArray[] = $magentoProduct;
+        };
+        return $magentoArray;
+    }
+
     public function createSale($magento_id,$sale_date)
     {
         $customer_id = "02dcd191-aeb7-11e9-f336-8cd80f97308f";// "name": "Web Customer ",

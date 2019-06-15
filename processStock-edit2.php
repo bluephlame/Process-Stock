@@ -1,6 +1,4 @@
 <?php
-// File setup SKU, QTY, Retail price, Web Price
-
     set_time_limit(1800);
     $_BASE_DIR = "/home/bbaftest/";
     echo "V1.03 timestamp: " . date('c',time()) . "\n\r"  ;
@@ -23,7 +21,7 @@
         $warehouses[$house['warehouse_id']] = array('id' => $house['warehouse_id'], 'name' => $house['code']);
     }
 
-    salesList(strtotime("-5 day"),$warehouses);
+    //salesList(strtotime("-5 day"),$warehouses);
 
     foreach ($warehouses as $warehouse ) {
         if($warehouse['name'] == 'Townsville')
@@ -31,7 +29,6 @@
             //vend store
             echo "processing VEND arehouse ". $warehouse['name']."\n";
             ProcessVendInventory($warehouse);
-            ProcessVendSales($warehouse);
         }
         else{
             echo "processing warehouse ". $warehouse['name']."\n";
@@ -267,13 +264,13 @@
             ->addAttributeToFilter('created_at', array('from' => date('c',$startDate), "to" => '3015-10-15 01:02:02'));
         $order_collection->load();
 
-  $tfile='orderid_count.txt';
-  $myfile=fopen("$tfile",'r');
-  $orderCount= rtrim(fgets($myfile));
-  $lastOrderId = rtrim(fgets($myfile));
-  fclose($myfile);
+        $tfile='orderid_count.txt';
+        $myfile=fopen("$tfile",'r');
+        $orderCount= rtrim(fgets($myfile));
+        $lastOrderId = rtrim(fgets($myfile));
+        fclose($myfile);
 
-  print("Last order details Counter {$orderCount} and Last order ID {$lastOrderId} working in ".getcwd().PHP_EOL);
+        print("Last order details Counter {$orderCount} and Last order ID {$lastOrderId} working in ".getcwd().PHP_EOL);
 
         foreach ($order_collection as $key => $order) 
         {
