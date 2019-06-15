@@ -36,16 +36,28 @@ class ProcessVend {
 
     public function seedStock()
     {
-        $products = $this->vend->getProducts();
         $magentoArray = [];
-        foreach($products as $product)
+        $products = $this->vend->getProducts();
+
+        $pageination = $this->vend->getPages();
+        $pages = $pageination->pages;
+        print("Pages ". $pageination->pages . "\n");
+        $page = 1;
+        while( $page<$pages)
         {
-            $sku = $product->__get('sku');
-            $inventory = $product->getInventory();
-            $price = $product->__get('price');
-            $magentoProduct = new MagentoProduct($sku,$inventory,$price);
-            $magentoArray[] = $magentoProduct;
-        };
+            foreach($products as $product)
+            {
+                print("SKU ". $product->__get('sku') . "\n");
+                $sku = $product->__get('sku');
+                $inventory = $product->getInventory();
+                $price = $product->__get('price');
+                $magentoProduct = new MagentoProduct($sku,$inventory,$price);
+                $magentoArray[] = $magentoProduct;
+            };
+            $page++;
+            $products = $this->vend->getProducts(["page"=>$page]);
+            print("Page ". $page . "\n");
+        }
         return $magentoArray;
     }
 
