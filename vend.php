@@ -20,7 +20,7 @@ class ProcessVend {
     {
         $date = new DateTime('now');
 
-        $products = $vend->getProductsSince($date->modify('- 1 week')->format('Y-m-d H:i:s'));
+        $products = $this->vend->getProductsSince($date->modify('- 1 week')->format('Y-m-d H:i:s'));
 
         $magentoArray = [];
         foreach($products as $product)
@@ -36,7 +36,7 @@ class ProcessVend {
 
     public function seedStock()
     {
-        $products = $vend->getProducts();
+        $products = $this->vend->getProducts();
         $magentoArray = [];
         foreach($products as $product)
         {
@@ -80,6 +80,6 @@ class ProcessVend {
         $this->Price = $price;
     }
   }
-//   $sales = $vend->saveSale();
+//   $sales = $this->vend->saveSale();
 
 ?>
