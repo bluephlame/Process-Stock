@@ -289,3 +289,5 @@ tmp-php.ini
 
 /vendor
 .DS_Store
+composer.phar
+composer.lock
