@@ -36,9 +36,8 @@
         }
     }
     function ProcessVendInventory($warehouse)
-    {
-        
-        $data = $processVend->getStock();
+    {        
+        $data = $processVend->seedStock();
         foreach($data as $row)
         {
             ProductUpdate($row->SKU,$row->QTY,$warehouse); //send update
