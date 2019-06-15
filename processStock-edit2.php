@@ -2,7 +2,7 @@
     set_time_limit(1800);
     $_BASE_DIR = "/home/bbaftest/";
     echo "V1.03 timestamp: " . date('c',time()) . "\n\r"  ;
-    require_once 'app/Mage.php';
+    require_once '../app/Mage.php';
     require_once 'vend.php';
 
     Mage::app();
@@ -21,13 +21,17 @@
         $warehouses[$house['warehouse_id']] = array('id' => $house['warehouse_id'], 'name' => $house['code']);
     }
 
+    print_r($warehouses);
+    echo "processing VEND arehouse ". $warehouse[4]['name']."\n";
+            ProcessVendInventory($warehouse[4]);
+return;
     //salesList(strtotime("-5 day"),$warehouses);
 
     foreach ($warehouses as $warehouse ) {
-        if($warehouse['name'] == 'Townsville')
+        if($warehouse['name'] == 'townsville')
         {
             //vend store
-            echo "processing VEND arehouse ". $warehouse['name']."\n";
+            echo "processing VEND Warehouse ". $warehouse['name']."\n";
             ProcessVendInventory($warehouse);
         }
         else{
@@ -35,12 +39,14 @@
             ProcessWarehouse($warehouse);
         }
     }
+
     function ProcessVendInventory($warehouse)
     {
-        
+        $processVend = new ProcessVend();
         $data = $processVend->getStock();
         foreach($data as $row)
-        {
+        {   
+            print("Processing ". $row->SKU."\n");
             ProductUpdate($row->SKU,$row->QTY,$warehouse); //send update
             ProductPriceUpdate($row->SKU,$row->Price,$warehouse);
         }
