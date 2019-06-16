@@ -8,12 +8,17 @@ require __DIR__ . '/VendSaleDto.php';
 
 class ProcessVend {
 
-    private $accessToken = "5OtjwgBqfHJZhR2NX8JGg_EhLlk4Fv86t2VVxoBq";
+    private $accessToken;
     private $vend;
 
     function __construct(){
         $this->vend = new VendAPI\VendAPI( 'https://abcchristianbooks.vendhq.com','Bearer',$this->accessToken);
        // $this->vend->debug(true);
+        $tfile='token.txt';
+        $myfile=fopen("$tfile",'r');
+        $this->accessToken= rtrim(fgets($myfile));
+        fclose($myfile);
+
     }
 
     public function getStock()
