@@ -3,7 +3,7 @@
     $_BASE_DIR = "/home/bbaftest/";
     echo "V1.03 timestamp: " . date('c',time()) . "\n\r"  ;
     //Note relative directory
-    require_once 'app/Mage.php';
+    require_once '../app/Mage.php';
     require_once 'vend.php';
 
     //initiate MAgento
@@ -29,18 +29,18 @@
 
 
     //process Inventory into Magento
-    foreach ($warehouses as $warehouse ) {
-        if($warehouse['name'] == 'townsville')
-        {
-            //vend store
-            echo "processing VEND Warehouse ". $warehouse['name']."\n";
-            ProcessVendInventory($warehouse);
-        }
-        else{
-            echo "processing warehouse ". $warehouse['name']."\n";
-            ProcessTowerInventory($warehouse);
-        }
-    }
+    // foreach ($warehouses as $warehouse ) {
+    //     if($warehouse['name'] == 'townsville')
+    //     {
+    //         //vend store
+    //         echo "processing VEND Warehouse ". $warehouse['name']."\n";
+    //         ProcessVendInventory($warehouse);
+    //     }
+    //     else{
+    //         echo "processing warehouse ". $warehouse['name']."\n";
+    //         ProcessTowerInventory($warehouse);
+    //     }
+    // }
 
     function ProcessVendInventory($warehouse)
     {
@@ -48,7 +48,7 @@
         $data = $processVend->seedStock();
         foreach($data as $row)
         {   
-            print("Processing ". $row->SKU."\n");
+           // print("Processing ". $row->SKU."\n");
             ProductUpdate($row->SKU,$row->QTY,$warehouse); //send update
             ProductPriceUpdate($row->SKU,$row->Price,$warehouse);
         }
@@ -140,7 +140,7 @@
             $stock = ($qty > 0 ? 1 : 0);
             $qty = ($qty <= 0 ? 0 : $qty );
             $date = ($qty > 0 ? NULL : date());
-            print ("DATE {$date}");
+            //print ("DATE {$date}");
             $result = $database->query(
                 "update cataloginventory_stock_item 
                     set qty= {$qty} ,is_in_stock = {$stock}, low_stock_date = '{$date}' 
@@ -238,7 +238,7 @@
     {
         global $database;
         $product_id = Mage::getModel("catalog/product")->getIdBySku( $productSku[0] );
-        print_r("ID ".$product_id. " SKU ".$productSku[0]."\n\r");
+      //  print_r("ID ".$product_id. " SKU ".$productSku[0]."\n\r");
 
         $arrayString = implode("','",$productSku);
         $result=$database->query(
@@ -297,12 +297,14 @@
             print("processing order {$orderId} lastOrderId {$lastOrderId}\n ");
             $lastOrderId = $order->getIncrementId();
 
-            if($warehouse[$warehouseId->name == "Townsville"])
+            if($warehouseId == 4)
             {
+                print("processing a vend order\n");
                 VendOrder($order);
             }
             else
             {
+                print("processing a Tower order\n");
                 $tmpOrder = TowerOrders($order);
                 orders2csv($tmpOrder,sizeof($tmpOrder),$warehouse[$warehouseId]);
             }
@@ -323,7 +325,8 @@
         $ItemNumber = 0;
 
         $internalId = $order->getIncrementId();
-        $sale  = $ProcessVend->createSale($internalId,$date);
+        $processVend = new ProcessVend();
+        $sale  = $processVend->createSale($internalId,$date);
 
         foreach($ordered_items as $item)
         { 
@@ -338,7 +341,8 @@
         $sale->addShipping(number_format($order->getShippingInclTax(), 2, '.', ''),
             number_format($order->getShippingTaxAmount(), 2, '.', '')); //tax
    
-        $ProcessVend->finalizeSale($sale,$order->getGrandTotal());
+        $processVend->finaliseSale($sale,$order->getGrandTotal());
+        print("Vend Sale Processed\n");
     }
 
     function TowerOrders($order)
