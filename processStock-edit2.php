@@ -2,12 +2,8 @@
     set_time_limit(1800);
     $_BASE_DIR = "/home/bbaftest/";
     echo "V1.03 timestamp: " . date('c',time()) . "\n\r"  ;
-<<<<<<< HEAD
     //Note relative directory
     require_once 'app/Mage.php';
-=======
-    require_once '../app/Mage.php';
->>>>>>> b6e59bb0b8a5dd1e4ad14128955af4839f866fe6
     require_once 'vend.php';
 
     //initiate MAgento
@@ -27,17 +23,9 @@
         $warehouses[$house['warehouse_id']] = array('id' => $house['warehouse_id'], 'name' => $house['code']);
     }
 
-<<<<<<< HEAD
     //process new sales in the last 5 days
     //this function ecides basedon warehosue what todo (vend ot TOWER)
     salesList(strtotime("-5 day"),$warehouses);
-=======
-    print_r($warehouses);
-    echo "processing VEND arehouse ". $warehouse[4]['name']."\n";
-            ProcessVendInventory($warehouse[4]);
-return;
-    //salesList(strtotime("-5 day"),$warehouses);
->>>>>>> b6e59bb0b8a5dd1e4ad14128955af4839f866fe6
 
 
     //process Inventory into Magento
