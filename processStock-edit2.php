@@ -2,8 +2,12 @@
     set_time_limit(1800);
     $_BASE_DIR = "/home/bbaftest/";
     echo "V1.03 timestamp: " . date('c',time()) . "\n\r"  ;
+<<<<<<< HEAD
     //Note relative directory
     require_once 'app/Mage.php';
+=======
+    require_once '../app/Mage.php';
+>>>>>>> b6e59bb0b8a5dd1e4ad14128955af4839f866fe6
     require_once 'vend.php';
 
     //initiate MAgento
@@ -23,17 +27,25 @@
         $warehouses[$house['warehouse_id']] = array('id' => $house['warehouse_id'], 'name' => $house['code']);
     }
 
+<<<<<<< HEAD
     //process new sales in the last 5 days
     //this function ecides basedon warehosue what todo (vend ot TOWER)
     salesList(strtotime("-5 day"),$warehouses);
+=======
+    print_r($warehouses);
+    echo "processing VEND arehouse ". $warehouse[4]['name']."\n";
+            ProcessVendInventory($warehouse[4]);
+return;
+    //salesList(strtotime("-5 day"),$warehouses);
+>>>>>>> b6e59bb0b8a5dd1e4ad14128955af4839f866fe6
 
 
     //process Inventory into Magento
     foreach ($warehouses as $warehouse ) {
-        if($warehouse['name'] == 'Townsville')
+        if($warehouse['name'] == 'townsville')
         {
             //vend store
-            echo "processing VEND arehouse ". $warehouse['name']."\n";
+            echo "processing VEND Warehouse ". $warehouse['name']."\n";
             ProcessVendInventory($warehouse);
         }
         else{
@@ -41,11 +53,14 @@
             ProcessTowerInventory($warehouse);
         }
     }
+
     function ProcessVendInventory($warehouse)
-    {        
+    {
+        $processVend = new ProcessVend();        
         $data = $processVend->seedStock();
         foreach($data as $row)
-        {
+        {   
+            print("Processing ". $row->SKU."\n");
             ProductUpdate($row->SKU,$row->QTY,$warehouse); //send update
             ProductPriceUpdate($row->SKU,$row->Price,$warehouse);
         }
