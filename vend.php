@@ -41,13 +41,13 @@ class ProcessVend {
 
         $pageination = $this->vend->getPages();
         $pages = $pageination->pages;
-        print("Pages ". $pageination->pages . "\n");
+        //print("Pages ". $pageination->pages . "\n");
         $page = 1;
         while( $page<$pages)
         {
             foreach($products as $product)
             {
-                print("SKU ". $product->__get('sku') . "\n");
+               // print("SKU ". $product->__get('sku') . "\n");
                 $sku = $product->__get('sku');
                 $inventory = $product->getInventory();
                 $price = $product->__get('price');
@@ -56,7 +56,7 @@ class ProcessVend {
             };
             $page++;
             $products = $this->vend->getProducts(["page"=>$page]);
-            print("Page ". $page . "\n");
+           // print("Page ". $page . "\n");
         }
         return $magentoArray;
     }

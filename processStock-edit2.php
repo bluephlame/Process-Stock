@@ -2,9 +2,11 @@
     set_time_limit(1800);
     $_BASE_DIR = "/home/bbaftest/";
     echo "V1.03 timestamp: " . date('c',time()) . "\n\r"  ;
+    //Note relative directory
     require_once 'app/Mage.php';
     require_once 'vend.php';
 
+    //initiate MAgento
     Mage::app();
     umask(0);
     $database = Mage::getSingleton('core/resource')->getConnection('core_read');
@@ -21,8 +23,12 @@
         $warehouses[$house['warehouse_id']] = array('id' => $house['warehouse_id'], 'name' => $house['code']);
     }
 
-    //salesList(strtotime("-5 day"),$warehouses);
+    //process new sales in the last 5 days
+    //this function ecides basedon warehosue what todo (vend ot TOWER)
+    salesList(strtotime("-5 day"),$warehouses);
 
+
+    //process Inventory into Magento
     foreach ($warehouses as $warehouse ) {
         if($warehouse['name'] == 'Townsville')
         {
@@ -32,7 +38,7 @@
         }
         else{
             echo "processing warehouse ". $warehouse['name']."\n";
-            ProcessWarehouse($warehouse);
+            ProcessTowerInventory($warehouse);
         }
     }
     function ProcessVendInventory($warehouse)
@@ -44,7 +50,7 @@
             ProductPriceUpdate($row->SKU,$row->Price,$warehouse);
         }
     }
-    function ProcessWarehouse($warehouse)
+    function ProcessTowerInventory($warehouse)
     {        
         $diffData = loadFile("STOCK",$warehouse);
 
@@ -65,7 +71,7 @@
 ///    find newest file in directory with PREFIX, 
 ///     Get PREFIX file from History folder
 ///     Compare files
-///     generate data for return.
+///     generate diff data for return.
 ///     Move Newest File to History (overwrite old file)
 ///     Delete other PREFIX files in directory.
 
