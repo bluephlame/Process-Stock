@@ -12,13 +12,15 @@ class ProcessVend {
     private $vend;
 
     function __construct(){
-        $this->vend = new VendAPI\VendAPI( 'https://abcchristianbooks.vendhq.com','Bearer',$this->accessToken);
+
        // $this->vend->debug(true);
         $tfile='token.txt';
         $myfile=fopen("$tfile",'r');
         $this->accessToken= rtrim(fgets($myfile));
         fclose($myfile);
+        print("Access Token :{$this->accessToken}\n");
 
+        $this->vend = new VendAPI\VendAPI( 'https://abcchristianbooks.vendhq.com','Bearer',$this->accessToken);
     }
 
     public function getStock()

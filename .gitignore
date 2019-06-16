@@ -292,3 +292,4 @@ tmp-php.ini
 composer.phar
 composer.lock
 orderid_count.txt
+token.txt
