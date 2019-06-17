@@ -1,9 +1,9 @@
 <?php
     set_time_limit(1800);
     $_BASE_DIR = "/home/bbaftest/";
-    echo "V1.03 timestamp: " . date('c',time()) . "\n\r"  ;
+    echo "V1.04 timestamp: " . date('c',time()) . "\n\r"  ;
     //Note relative directory
-    require_once '../app/Mage.php';
+    require_once '../public_html/app/Mage.php';
     require_once 'vend.php';
 
     //initiate MAgento
