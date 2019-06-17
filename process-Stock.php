@@ -29,18 +29,18 @@
 
 
     //process Inventory into Magento
-    // foreach ($warehouses as $warehouse ) {
-    //     if($warehouse['name'] == 'townsville')
-    //     {
-    //         //vend store
-    //         echo "processing VEND Warehouse ". $warehouse['name']."\n";
-    //         ProcessVendInventory($warehouse);
-    //     }
-    //     else{
-    //         echo "processing warehouse ". $warehouse['name']."\n";
-    //         ProcessTowerInventory($warehouse);
-    //     }
-    // }
+    foreach ($warehouses as $warehouse ) {
+        if($warehouse['name'] == 'townsville')
+        {
+            //vend store
+            echo "processing VEND Warehouse ". $warehouse['name']."\n";
+            ProcessVendInventory($warehouse);
+        }
+        else{
+            echo "processing warehouse ". $warehouse['name']."\n";
+            ProcessTowerInventory($warehouse);
+        }
+    }
 
     function ProcessVendInventory($warehouse)
     {
