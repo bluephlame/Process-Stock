@@ -96,6 +96,7 @@
         {
             //need to get last updated file, and then do diff from that.
             $diffCommand = "diff --changed-group-format='%>' --unchanged-group-format='' --new-group-format='%>' {$latestFile} {$previousFile}";
+            print $diffCommand;
             $result = shell_exec ($diffCommand);
 
             print(getTimeStamp().": moving file from {$latestFile} to {$previousFile}\n");
