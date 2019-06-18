@@ -306,7 +306,7 @@
             {
                 print("processing a Tower order\n");
                 $tmpOrder = TowerOrders($order);
-                orders2csv($tmpOrder,sizeof($tmpOrder),$warehouse[$warehouseId]);
+                orders2csv($tmpOrder,$orderCount++,$warehouse[$warehouseId]);
             }
             //NOT SURE WHHY THE LINE BELOW HAVE COMMENTED OUT FOR TESTING
             //$result[$warehouseId] = array_merge($tmpOrder,$result[$warehouseId]);
