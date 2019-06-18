@@ -45,7 +45,7 @@
     function ProcessVendInventory($warehouse)
     {
         $processVend = new ProcessVend();        
-        $data = $processVend->seedStock();
+        $data = $processVend->getStock();
         foreach($data as $row)
         {   
            // print("Processing ". $row->SKU."\n");

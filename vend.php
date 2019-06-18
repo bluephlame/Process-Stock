@@ -18,7 +18,7 @@ class ProcessVend {
         $myfile=fopen("$tfile",'r');
         $this->accessToken= rtrim(fgets($myfile));
         fclose($myfile);
-        print("Access Token :{$this->accessToken}\n");
+        //print("Access Token :{$this->accessToken}\n");
 
         $this->vend = new VendAPI\VendAPI( 'https://abcchristianbooks.vendhq.com','Bearer',$this->accessToken);
     }
@@ -27,7 +27,7 @@ class ProcessVend {
     {
         $date = new DateTime('now');
 
-        $products = $this->vend->getProductsSince($date->modify('- 1 week')->format('Y-m-d H:i:s'));
+        $products = $this->vend->getProductsSince($date->modify('- 1 day')->format('Y-m-d H:i:s'));
 
         $magentoArray = [];
         foreach($products as $product)
