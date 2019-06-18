@@ -26,31 +26,26 @@ class ProcessVend {
     public function getStock()
     {
         $date = new DateTime('now');
-
         $products = $this->vend->getProductsSince($date->modify('- 1 day')->format('Y-m-d H:i:s'));
-
-        $magentoArray = [];
-        foreach($products as $product)
-        {
-            $sku = $product->__get('sku');
-            $inventory = $product->getInventory();
-            $price = $product->__get('price');
-            $magentoProduct = new MagentoProduct($sku,$inventory,$price);
-            $magentoArray[] = $magentoProduct;
-        };
-        return $magentoArray;
+        $pageination = $this->vend->getPages();
+        return paginateStock($products,$pageination);
     }
 
     public function seedStock()
     {
         $magentoArray = [];
         $products = $this->vend->getProducts();
-
         $pageination = $this->vend->getPages();
+        return paginateStock($products,$pageination);
+
+    }
+
+    private function paginateStock($products,$pagination)
+    {
         $pages = $pageination->pages;
         //print("Pages ". $pageination->pages . "\n");
         $page = 1;
-        while( $page<$pages)
+        while( $page<=$pages)
         {
             foreach($products as $product)
             {
