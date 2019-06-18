@@ -28,7 +28,7 @@ class ProcessVend {
         $date = new DateTime('now');
         $products = $this->vend->getProductsSince($date->modify('- 1 day')->format('Y-m-d H:i:s'));
         $pageination = $this->vend->getPages();
-        return paginateStock($products,$pageination);
+        return $this->paginateStock($products,$pageination);
     }
 
     public function seedStock()
@@ -36,7 +36,7 @@ class ProcessVend {
         $magentoArray = [];
         $products = $this->vend->getProducts();
         $pageination = $this->vend->getPages();
-        return paginateStock($products,$pageination);
+        return $this->paginateStock($products,$pageination);
 
     }
 
