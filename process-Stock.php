@@ -285,8 +285,6 @@
         {
             $warehouseId = $order->getStockId();
             $tmpOrder = array();
-            $date = Mage::helper('core')->formatDate($order->getCreatedAt(), "short");
-            $time = date("H:i:s",strtotime(Mage::helper('core')->formatTime($order->getCreatedAt(), "medium")));
             $orderId = $order->getIncrementId();
             
 
@@ -348,6 +346,10 @@
 
     function TowerOrders($order)
     {
+
+        $date = Mage::helper('core')->formatDate($order->getCreatedAt(), "short");
+        $time = date("H:i:s",strtotime(Mage::helper('core')->formatTime($order->getCreatedAt(), "medium")));
+        
         if($order->getCustomerId())
         {
             $customer[$order->getCustomerId()] = array(
