@@ -92,7 +92,7 @@
 
         $latestFile = $_BASE_DIR.$warehouse['name']."/inbound/".reset($StockFiles);
         $previousFile = $_BASE_DIR.$warehouse['name']."/lastimport/".$prefix.".csv";
-        if(count($StockFiles) > 0)
+        if(count($StockFiles) > 1)
         {
             //need to get last updated file, and then do diff from that.
             $diffCommand = "diff --changed-group-format='%>' --unchanged-group-format='' --new-group-format='%>' {$latestFile} {$previousFile}";
